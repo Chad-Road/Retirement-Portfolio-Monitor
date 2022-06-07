@@ -16,10 +16,5 @@ class DailyData:
         self.volume = volume
 
 
-
-def main():
-    
-# Program Starts Here
 if __name__ == "__main__":
-    # run unit testing only if run as a stand-alone script
-    main()
+    pass
