@@ -1,4 +1,3 @@
-
 from stock_class import Stock
 
 class Retirement_Account:

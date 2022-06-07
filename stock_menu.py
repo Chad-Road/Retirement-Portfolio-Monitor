@@ -1,23 +1,26 @@
-
 from datetime import datetime
 from stock_class import Stock, DailyData
 from account_class import Traditional, Robo
 import matplotlib.pyplot as plt
+import yfinance as yf
 import csv
+import os
+
 
 def add_stock(stock_list):
-      option = ""
-      while option != "0":
-          print("Stock to be added")
-          stock_symbol = input("Enter the three letter stock symbol: ").upper()
-          stock_name = input("Enter the stock name: ")
-          num_shares = float(input("Enter the number of shares you want to purchase: "))
-          new_stock = Stock(stock_symbol, stock_name, num_shares)
-          stock_list.append(new_stock)
-          option = input("Press 1 to enter a new stock or 0 to quit: ")
+    # Add new stocks to your stock list
+    option = ""
+    while option != "0":
+        print("Stock to be added")
+        stock_symbol = input("Enter the three letter stock symbol: ").upper()
+        stock_name = input("Enter the stock name: ")
+        num_shares = float(input("Enter the number of shares you want to purchase: "))
+        new_stock = Stock(stock_symbol, stock_name, num_shares)
+        stock_list.append(new_stock)
+        option = input("Press 1 to enter a new stock or 0 to quit: ")
 
-# Remove stock and all daily data
 def delete_stock(stock_list):
+    # Delete stocks from your stock list
     print("Which stock would you like to delete? ")
     print("Stock List: [", end=" ")
     for stock in stock_list:
@@ -196,12 +199,9 @@ def main_menu(stock_list):
             
             print("Goodbye")
 
-# Begin program
 def main():
     stock_list = []
     main_menu(stock_list)
 
-# Program Starts Here
 if __name__ == "__main__":
-    # execute only if run as a stand-alone script
     main()
