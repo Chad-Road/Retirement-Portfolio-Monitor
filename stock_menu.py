@@ -6,9 +6,18 @@ import yfinance as yf
 import csv
 import os
 
+# Updating to accept automatic data from yfinance
 
 def add_stock(stock_list):
-    # Add new stocks to your stock list
+    # Rewrite to fetch possible stock symbols and confirm with user that it's correct
+    """
+    Add new stocks to personal stock list
+    
+    Parameters
+    ----------
+    stock_list: list
+        list of all added portfolio stocks
+    """
     option = ""
     while option != "0":
         print("Stock to be added")
@@ -52,6 +61,7 @@ def list_stocks(stock_list):
     
     # Add Daily Stock Data
 def add_stock_data(stock_list):
+    # Rewriting this to fetch current information from stock list
     print("Add Daily Stock Data ---- ")
     print("Stock LIst: [", end=" ")
     for stock in stock_list:

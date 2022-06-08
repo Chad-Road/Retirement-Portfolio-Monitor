@@ -1,6 +1,11 @@
 
 class Stock:
+    """
+    
+    """
     def __init__(self, symbol, name, shares):
+        """
+        Creates"""
         self.symbol = symbol
         self.name = name
         self.shares = shares
