@@ -20,6 +20,12 @@ class DailyData:
         self.close = close
         self.volume = volume
 
+class Bond:
+    """"""
+    def __init__(self, return_rate, return_date):
+        self.return_rate = return_rate
+        self.return_date = return_date
+
 
 if __name__ == "__main__":
     pass
