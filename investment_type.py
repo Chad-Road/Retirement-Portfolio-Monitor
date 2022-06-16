@@ -1,5 +1,8 @@
 from stock_class import Stock
 
+# Stocks, Bonds, Mutual Funds, CDs
+# Type, 
+
 class Retirement_Account:
     def __init__(self, balance, number):
         self.balance = balance
@@ -20,6 +23,23 @@ class Robo(Retirement_Account):
 
     def investment_return(self):
         return (self.years * self.balance * 1.05)
+
+class Investment:
+    """ General class of investments including stock based, bond, and retirement"""
+
+    def __init__(self, value, mean_return, return_risk):
+        self.value = value 
+        self.mean_return = mean_return
+        self.return_risk = return_risk
+
+class StockBased(Investment):
+    def __init__(self):
+        pass
+
+
+class MaturationBased(Investment):
+    def __init__(self):
+        pass
 
 if __name__ == "__main__":
     pass

@@ -1,12 +1,16 @@
 from datetime import datetime
 from stock_class import Stock, DailyData
-from account_class import Traditional, Robo
+from investment_type import Traditional, Robo
+
 import matplotlib.pyplot as plt
 import yfinance as yf
 import csv
 import os
 
 # Updating to accept automatic data from yfinance
+# Add taxation 
+# Add 401k, IRA
+# Add
 
 def add_stock(stock_list):
     # Rewrite to fetch possible stock symbols and confirm with user that it's correct
