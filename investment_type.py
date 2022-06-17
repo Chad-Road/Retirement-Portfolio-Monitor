@@ -1,45 +1,31 @@
 from stock_class import Stock
 
-# Stocks, Bonds, Mutual Funds, CDs
-# Type, 
-
-class Retirement_Account:
-    def __init__(self, balance, number):
-        self.balance = balance
-        self.number = number
-
-class Traditional(Retirement_Account):
-    def __init__(self, balance, number):
-        super().__init__(balance, number)
-        self.Stock_List = []
-
-    def add_stock(self, stock_data):
-        self.Stock_List.append(stock_data)
-
-class Robo(Retirement_Account):
-    def __init__(self, balance, number, years):
-        super().__init__(balance, number)
-        self.years = years
-
-    def investment_return(self):
-        return (self.years * self.balance * 1.05)
-
 class Investment:
-    """ General class of investments including stock based, bond, and retirement"""
+    """ General class of investments excluding maturation based investments (e.g. stock, funds, etc.)"""
 
-    def __init__(self, value, mean_return, return_risk):
-        self.value = value 
+    def __init__(self, initial_value, mean_return, return_risk, expected_tax, liquidity_penalty, other_fees):
+        self.initial_value = initial_value 
         self.mean_return = mean_return
         self.return_risk = return_risk
+        self.expected_tax = expected_tax
+        self.liquidity_penalty = liquidity_penalty
+        self.other_fees = other_fees
 
-class StockBased(Investment):
-    def __init__(self):
+    def add_inv(self):
         pass
 
 
 class MaturationBased(Investment):
-    def __init__(self):
+    """ Sub-class of maturation based investments including bonds, IRAs, and 401ks"""
+
+    def __init__(self, initial_value, mean_return, return_risk, expected_tax, liquidity_penalty, maturation_time, early_penalty):
+        super().__init__(initial_value, mean_return, return_risk, expected_tax, liquidity_penalty)
+        self.maturation_time = maturation_time
+        self.early_penalty = early_penalty
+
+    def add_ma_inv(self):
         pass
+
 
 if __name__ == "__main__":
     pass

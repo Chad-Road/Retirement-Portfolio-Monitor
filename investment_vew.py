@@ -9,13 +9,13 @@ import matplotlib.pyplot as plt
 import json
 
 
-class StockApp:
+class InvestmentView:
     def __init__(self):
         self.stock_list = []
 
         # Create Window
         self.root = Tk()
-        self.root.title("Investment Manager / Comparison Tool")
+        self.root.title("Investment Comparison")
       
         # Add Menu
         self.menubar = Menu(self.root)
@@ -271,7 +271,7 @@ class StockApp:
     
 
 def main():
-        app = StockApp()
+        app = InvestmentView()
         
 
 if __name__ == "__main__":
