@@ -26,6 +26,7 @@ class Investment:
         # 
         pass
 
+
 class EquityBased(Investment):
     """ Sub-class of equity based investments including stocks, funds, and ETFs """
 
@@ -72,3 +73,13 @@ class InvestmentVisualization:
         # stock market
         # bonds
         # 
+
+
+def calculate_mean_return():
+    pass
+
+def calculate_return_variability():
+    pass
+
+def calculate_investment_tax():
+    pass
