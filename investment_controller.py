@@ -32,8 +32,8 @@ class InvestmentMenu:
 
     # export investments
     def export_investment(self):
-        # save file to csv
-        pass
+        export_name = input("What would you like to name your export file?: ")
+        self.investment_df.to_csv(export_name)
 
     # add investments
     def add_investment(self):
