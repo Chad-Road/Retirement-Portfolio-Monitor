@@ -7,8 +7,15 @@ from os.path import exists
 class InvestmentMenu:
     """ Discription """
 
-    def __init__(self, investment_df):
-        self.investment_df = pd.read_csv(investment_df)
+    def __init__(self):
+        self.investment_df = pd.read_csv("investments.csv")
+
+        column_names = ["Name", "Symbol", "Initial Value", "Mean Return", "Return Risk", "Tax", "Other Fees", 
+                        "Annual Dividends", "Price Per Share", "Number of Shares", "Coupon Rate", 
+                        "Maturation Time", "Early Divestment Penalty"]
+
+        self.investment_df.columns = column_names
+        
 
     # current report and suggestions
     def portfolio_eval(self):
@@ -35,13 +42,46 @@ class InvestmentMenu:
         export_name = input("What would you like to name your export file?: ")
         self.investment_df.to_csv(export_name)
 
+    def save_file(self):
+        self.investment_df.to_csv("investment.csv")
+
     # add investments
     def add_investment(self):
-        choice = input("Do you know the average return and variance of the investment you want to add? Y/N ").upper()
-        if choice == "Y":
-            initial_value = input("What is the initial USD($) value of your investment?: ")
-            mean_return = input("What is the average annual return of your investment?: ")
-            return_risk = input("What is the varaibility percentage for its annual return?: ")
+        equity_or_bond = input("Is the investment (1)equity based (e.g. stock) or (2)maturation based (e.g. bond)?: 1/2 ").upper()
+
+
+        if equity_or_bond == "1":
+            print("========== Investment Input ==========")
+            stock_name = input("What is the name of the stock?: ") 
+            symbol_or_code = input("What is the stock symbol, ticker symbol, fund code, etc.?: ")
+            price_per_share = float(input("What is the current price per share?: "))
+            num_shares = float(input("How many shares are you purchasing?: "))
+            expect_tax = float(input("What is the expected tax on the investment?: "))
+            other_fees = float(input("Are there any other expected fees?: "))
+
+            initial_value = price_per_share * num_shares
+            mean_return = investment_model.get_mean_return()
+            return_risk = investment_model.get_return_variability()
+            annual_dividends = investment_model.get_dividends()
+
+            print("========== Investment Information ==========")
+            print(f"The name of the investment is: {stock_name}")
+            print(f"The symbol or ticker code is: {symbol_or_code}")
+            print(f"The current price per share is: {price_per_share}")
+            print(f"The number of shares that you are buying is: {num_shares}")
+            print(f"The average return on this investment is: {mean_return}")
+            print(f"Other fees connected to this investment are: {other_fees}")
+            is_correct = input("Is the above information correct?: Y/N").upper()
+            if is_correct == "Y":
+                
+
+        elif equity_or_bond == "2":
+            pass
+        else:
+            print("Please choose a correct option?: ")
+        
+        
+
 
 
     # delete investments
@@ -52,6 +92,25 @@ class InvestmentMenu:
     # preview possible investment
     def preview_new_investment(self):
         pass
+
+    def user_menu(self):
+        user_choice = input("Do you want to create a (1)new user or switch to another (2)existing user: ")
+        if user_choice == "1":
+            user_name = input("What would you like the new username to be?: ")
+            years_to_retire = input("How many years until this new user retires?: ")
+            risk = input("On a scale of 1-5, 1 being no risk, 5 being very high risk, how risky do you want this user's investments to be: ")
+            tax_bracket = input("What is this user's approximate annual income to determine approximate tax costs?: ")
+            
+            print("Is the following information correct?")
+            print(f"The new user's username is: {user_name}")
+            print(f"The approximate number of years until retirement is: {years_to_retire}")
+            print(f"The level of risk this user is comfortable with is: {risk}")
+            print(f"The approximate annual income of this user for tax calculations is: {tax_bracket}")
+
+            user_correct = input("Is this user information correct?: Y/N").upper()
+
+            if user_correct == "Y":
+                self.user = investment_model.User(user_name, tax_bracket, years_to_retire, risk)
 
 
     def cmd_line_menu(self):
@@ -64,6 +123,7 @@ class InvestmentMenu:
             print("4: Add investments")
             print("5: Delete investmetns")
             print("6: Preview possible investment")
+            print("7: User menu")
             print("0: Exit program")
             choice = input("Please enter your choice: ")
 
@@ -79,7 +139,10 @@ class InvestmentMenu:
                 self.del_investment()
             elif choice == "6":
                 self.preview_new_investment()
+            elif choice == "7":
+                self.user_menu()
             elif choice == "0":
+                self.save_file()
                 print("Exiting program")
                 break
             else:
