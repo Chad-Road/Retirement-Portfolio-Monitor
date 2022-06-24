@@ -10,13 +10,8 @@ from sklearn.linear_model import LinearRegression
 class InvestmentEvaluation:
     """ pass """
 
-    # def __init__(self, username, total_ann_income, years_to_retire, level_of_risk):
-    #     self.username = username
-    #     self.total_ann_income = total_ann_income
-    #     self.years_to_retire = years_to_retire
-    #     self.level_of_risk = level_of_risk
-    #     self.investment_df = pd.DataFrame()
-
+    def __init__(self, investment_df):
+        pass
     # overall portfolio report
         # show graph for  5 10 20 30 years
         # show risk report
@@ -42,8 +37,9 @@ class InvestmentVisualization:
         pass
 
     # historical averages projection
-        # stock market
-        # bonds
+        # mean return for market
+        # mean return for bonds
+
         # 
 
 

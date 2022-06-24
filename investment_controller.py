@@ -1,3 +1,4 @@
+
 import pandas as pd
 import investment_model
 from os.path import exists
@@ -8,13 +9,16 @@ class InvestmentMenu:
     """ Discription """
 
     def __init__(self):
-        self.investment_df = pd.read_csv("investments.csv")
+        if exists("investment.csv"):
+            self.investment_df = pd.read_csv("investments.csv")
+        else:
+            self.investment_df = pd.DataFrame()
 
-        column_names = ["Name", "Symbol", "Initial Value", "Mean Return", "Return Risk", "Tax", "Other Fees", 
-                        "Annual Dividends", "Price Per Share", "Number of Shares", "Coupon Rate", 
-                        "Maturation Time", "Early Divestment Penalty"]
+            column_names = ["Name", "Symbol", "Initial Value", "Mean Return", "Return Risk", "Tax", "Other Fees", 
+                            "Annual Dividends", "Price Per Share", "Number of Shares", "Coupon Rate", 
+                            "Maturation Time", "Early Penalty"]
 
-        self.investment_df.columns = column_names
+            self.investment_df.columns = column_names
         
 
     # current report and suggestions
@@ -49,7 +53,6 @@ class InvestmentMenu:
     def add_investment(self):
         equity_or_bond = input("Is the investment (1)equity based (e.g. stock) or (2)maturation based (e.g. bond)?: 1/2 ").upper()
 
-
         if equity_or_bond == "1":
             print("========== Investment Input ==========")
             stock_name = input("What is the name of the stock?: ") 
@@ -73,15 +76,24 @@ class InvestmentMenu:
             print(f"Other fees connected to this investment are: {other_fees}")
             is_correct = input("Is the above information correct?: Y/N").upper()
             if is_correct == "Y":
+                new_inv = {'symbol': symbol_or_code, 'Initial Value': initial_value, 'Mean Return': mean_return,
+                            'Tax': expect_tax, 'Other Fees': other_fees, 'Price Per Share': price_per_share,
+                            'Number of Shares': num_shares, }
+                self.investment_df.append(new_inv)
+            elif is_correct == "N":
+                input("Press enter to return to main menu")
+            else:
+                input("Press enter to return to main menu")
                 
-
         elif equity_or_bond == "2":
             pass
         else:
             print("Please choose a correct option?: ")
         
         
-
+# #["Name", "Symbol", "Initial Value", "Mean Return", "Return Risk", "Tax", "Other Fees", 
+#                         "Annual Dividends", "Price Per Share", "Number of Shares", "Coupon Rate", 
+#                         "Maturation Time", "Early Penalty"]
 
 
     # delete investments
@@ -148,3 +160,6 @@ class InvestmentMenu:
             else:
                 print("Error")
 
+if __name__== "__main__":
+    investments = InvestmentMenu()
+    investments.cmd_line_menu()
