@@ -8,17 +8,26 @@ from os.path import exists
 class InvestmentMenu:
     """ Discription """
 
-    def __init__(self):
+    def __init__(self, investment_file="investment.csv"):
+        """ Basic command line menu and functions to create and load investments
+        
+        Args:
+        investment_file (pandas DataFrame): [Dataframe of investments]
+
+        
+        """
+        
+        column_names = ["Name", "Symbol", "Initial Value", "Mean Return", "Return Risk", "Tax", "Other Fees", 
+                            "Annual Dividends", "Price Per Share", "Number of Shares", "Coupon Rate", 
+                            "Maturation Time", "Early Penalty"]
+        
         if exists("investment.csv"):
             self.investment_df = pd.read_csv("investments.csv")
         else:
-            self.investment_df = pd.DataFrame()
+            self.investment_df = pd.DataFrame(columns=column_names)
 
-            column_names = ["Name", "Symbol", "Initial Value", "Mean Return", "Return Risk", "Tax", "Other Fees", 
-                            "Annual Dividends", "Price Per Share", "Number of Shares", "Coupon Rate", 
-                            "Maturation Time", "Early Penalty"]
+            
 
-            self.investment_df.columns = column_names
         
 
     # current report and suggestions
@@ -30,9 +39,9 @@ class InvestmentMenu:
     # import investments
     def import_investment(self):
         print("Warning! this will close current investments and open new file")
-        import_choice = input("Press Y to continue or any other key to cancel").upper()
+        import_choice = input("Press Y to continue or any other key to cancel ").upper()
         if import_choice == "Y":
-            import_path = input("Please enter file path to your saved CSV file")
+            import_path = input("Please enter file path to your saved CSV file ")
             if exists(import_path):
                 new_inv = InvestmentMenu(import_path)
                 new_inv.cmd_line_menu()
@@ -43,6 +52,8 @@ class InvestmentMenu:
 
     # export investments
     def export_investment(self):
+        # TODO write to file after every new investment is added
+
         export_name = input("What would you like to name your export file?: ")
         self.investment_df.to_csv(export_name)
 

@@ -1,46 +1,68 @@
 import pandas as pd
 import yfinance as yf
 import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 import datetime as dt
+from datetime import date
 from sklearn.linear_model import LinearRegression
 
+sns.set_style("darkgrid")
+sns.set_theme("talk")
+
+now = date.today().year
+year_list = list(range(int(now), int(now) + 31))
+
+# Vanguard index
+# VTSAX = yf.Ticker("vtsax")
+# vtsax_hist = VTSAX.history()
+# print(vtsax_hist.head())
+
+# Schwab index
+# swtsx = yf.Ticker("swtsx")
+# swtsx_hist = swtsx.history()
+# print(swtsx_hist.head())
+
+# Russell 3000 ETF
+iwv = yf.download("iwv", period="max", interval='1mo')
+print(iwv.index)
+# iwv_hist = iwv.history()
+# iwv_hist["dates"] = pd.to_datetime(iwv_hist.index)
+# print(iwv_hist.groupby(iwv_hist["dates"].dt.year)["Close"].mean())
+
+# # Wilshire 500 index
+# WFIVX = 
 
 
 
-class InvestmentEvaluation:
-    """ pass """
+def display_mean_market(amount=1000.0):
 
-    def __init__(self, investment_df):
-        pass
-    # overall portfolio report
-        # show graph for  5 10 20 30 years
-        # show risk report
-        # show
+    mean_return = []
+    low_return = []
+    high_return = []
+    for i, x in enumerate(range(31)):
+        if i == 0:
+            temp = amount
+            mean_return.append(temp)
+        else:
+            temp = mean_return[i-1] * 1.0829
+            mean_return.append(temp)
 
-    # portfolio mean return
-        # use market base rate return
-        # use historical return
+    #print(mean_return)
+    ax = sns.lineplot(x=year_list, y=mean_return, ci="sd")
+    plt.show()
 
-    # portfolio volatility
-        # use market base rate volitility
-        # use historical volatility
+#display_mean_market()
 
-    # sharpe ratio
-        # (asset mean return - risk free return rate) / (std of portfolio)
 
-    # portfolio autocorrelation
-
+def display_mean_bonds():
     pass
 
-class InvestmentVisualization:
-    def __init__(self):
-        pass
+def display_portfolio_projection():
+    pass
 
-    # historical averages projection
-        # mean return for market
-        # mean return for bonds
-
-        # 
+def display_each_investment():
+    pass
 
 
 def get_mean_return(symbol):
@@ -58,51 +80,5 @@ def get_investment_tax():
 
 
 
-
-
-
-# class Investment:
-#     """ General class of investments """
-
-#     def __init__(self, name, initial_value, mean_return, return_risk, expected_tax, other_fees):
-#         self.name = name
-#         self.initial_value = initial_value 
-#         self.mean_return = mean_return
-#         self.return_risk = return_risk
-#         self.expected_tax = expected_tax
-#         self.other_fees = other_fees
-
-#     def add_inv(self):
-#         pass
-
-#     def get_stock_info(self):
-#         # 
-#         pass
-
-
-# class EquityBased(Investment):
-#     """ Sub-class of equity based investments including stocks, funds, and ETFs """
-
-#     def __init__(self, name, initial_value, mean_return, return_risk, expected_tax, other_fees, 
-#                     symbol_or_code, annual_dividend, price_per_share, num_shares):
-#         super().__init__(name, initial_value, mean_return, return_risk, expected_tax, other_fees)
-#         self.symbol_or_code = symbol_or_code
-#         self.annual_dividend = annual_dividend
-#         self.price_per_share = price_per_share
-#         self.num_shares = num_shares
-
-
-# class MaturationBased(Investment):
-#     """ Sub-class of maturation based investments including bonds, IRAs, and 401ks """
-
-#     def __init__(self, name, initial_value, mean_return, return_risk, expected_tax, other_fees, coupon_rate, maturation_time):
-#         super().__init__(name, initial_value, mean_return, return_risk, expected_tax, other_fees)
-#         self.coupon_rate = coupon_rate
-#         self.maturation_time = maturation_time
-
-#     def add_ma_inv(self):
-#         pass
-
-#     def calc_bond_ytm(self):
-#         # ytm = coupon ((face value - current price)
-#         pass
+if __name__=="__main__":
+    pass
