@@ -7,32 +7,67 @@ import datetime as dt
 from datetime import date
 from sklearn.linear_model import LinearRegression
 
+### nned total return plus total yield
+
+# Set preferred Seaborn styles
 sns.set_style("darkgrid")
 sns.set_theme("talk")
 
 now = date.today().year
 year_list = list(range(int(now), int(now) + 31))
 
-# Vanguard index
-# VTSAX = yf.Ticker("vtsax")
-# vtsax_hist = VTSAX.history()
-# print(vtsax_hist.head())
+sandp = pd.read_csv("GitHub\\Retirement-Portfolio-Monitor\\datasets\\sp_return.csv")
+# sandp.loc[len(sandp.index)] = ["2022"]
+# print(type(sandp["Year"]))
+# print(sandp.iloc[75:])
 
-# Schwab index
-# swtsx = yf.Ticker("swtsx")
-# swtsx_hist = swtsx.history()
-# print(swtsx_hist.head())
+ # Schwab Total Market Index
+swtsx = yf.download("swtsx", peroid="max", interval="1mo")
+swtsx_mean = swtsx.groupby(swtsx.index.year).mean()
+swtsx_std = swtsx.groupby(swtsx.index.year).std()
 
-# Russell 3000 ETF
-iwv = yf.download("iwv", period="max", interval='1mo')
-print(iwv.index)
-# iwv_hist = iwv.history()
-# iwv_hist["dates"] = pd.to_datetime(iwv_hist.index)
-# print(iwv_hist.groupby(iwv_hist["dates"].dt.year)["Close"].mean())
+# Vanguard Total Market Index
+vti = yf.download("vti", peroid="max", interval="1mo")
+vti_mean = vti.groupby(vti.index.year).mean()
+vti_std = vti.groupby(vti.index.year).std()
 
-# # Wilshire 500 index
-# WFIVX = 
+print(swtsx_mean.head())
+print(vti_mean.head())
 
+
+def get_total_market_return():
+    """ Get annual return of two largest total market funds 
+    
+    Note: Vanguard world fund left out due to higher variability
+    and lower return, but could be included as a market centered
+    way to increase diversification.
+    """
+
+    # Real Return of S&P since 1928
+    sandp = pd.read_csv("GitHub\\Retirement-Portfolio-Monitor\\datasets\\sp_return.csv")
+
+    # Schwab Total Market Index
+    swtsx = yf.download("swtsx", peroid="max", interval="1mo")
+    swtsx_mean = swtsx.groupby(swtsx.index.year).mean()
+    swtsx_std = swtsx.groupby(swtsx.index.year).std()
+
+    # Vanguard Total Market Index
+    vti = yf.download("vti", peroid="max", interval="1mo")
+    vti_mean = vti.groupby(vti.index.year).mean()
+    vti_std = vti.groupby(vti.index.year).std()
+
+    # Vanguard World Index Fund (excluding U.S.)
+    # Generally more volatile and lower return than US market
+    # veu = yf.download("veu", peroid="max", interval="1mo")
+    # veu_mean = veu.groupby(veu.index.year).mean()
+    # veu_std = veu.groupby(veu.index.year).std()
+
+    market_return = pd.merge()
+
+    #return total_return
+
+# tote_return = get_total_market_return()
+# print(tote_return.iloc[69:])
 
 
 def display_mean_market(amount=1000.0):
