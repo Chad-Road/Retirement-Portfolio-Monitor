@@ -32,9 +32,17 @@ class InvestmentMenu:
 
     # current report and suggestions
     def portfolio_eval(self):
-        # portfolio return 
-        # portfolio volatility
-        pass
+        print("===== Reports and Suggestions Menu =====")
+        print("----- Projected Returns Visualizations -----")
+        print("1: Display My Portfolio 30 Year Projected Return")
+        print("2: Display Recent Index Fund 30 Year Projected Return")
+        print("3: Display S&P 500 30 Year Projected Return")
+        print("4: Display 10 Year Treasury Bond 30 Year Projected Return")
+        print("5: Display Real Estate 30 Year Projected Return")
+        print("----- Ticker Reports and Histories -----")
+        print("6: Get Ticker Report")
+        print("7: Get Ticker Prices")
+
 
     # import investments
     def import_investment(self):
