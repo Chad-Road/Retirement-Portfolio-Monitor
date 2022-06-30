@@ -1,4 +1,3 @@
-from cProfile import label
 import pandas as pd
 import yfinance as yf
 import numpy as np
@@ -8,7 +7,12 @@ import datetime as dt
 from datetime import date
 from sklearn.linear_model import LinearRegression
 
+# ===================== Notes and To-Do ===================== #
+
 # TODO use random sampling to create interval prediction animation
+# TODO add commodity visualization
+
+# ===================== Global Variables & Setup =================== #
 
 # Real Return of S&P (also Tbills, Tbonds, and Real Estate)
 sandp = pd.read_csv("GitHub\\Retirement-Portfolio-Monitor\\datasets\\sp_return.csv")
@@ -20,12 +24,16 @@ index_returns = pd.read_csv("GitHub\\Retirement-Portfolio-Monitor\\datasets\\ind
 sns.set("notebook", style="darkgrid", rc={"lines.linewidth": 4})
 
 
+# ===================== Get Bond / Market Values =================== #
+
 def get_mean_index_return():
     """ Get mean combined return of Schwab and Vanguard total market funds """
     
     global index_returns
     index_returns_mean = index_returns["Combined Index Return"].mean()
     return index_returns_mean
+
+#print(get_mean_index_return())
 
 
 def get_mean_index_std():
@@ -81,6 +89,32 @@ def get_current_index_returns():
     # veu_mean = veu.groupby(veu.index.year).mean()
     # veu_std = veu.groupby(veu.index.year).std()
 
+# ===================== Get Portfolio Values =================== #
+
+def get_portfolio_return():
+    pass
+
+def get_portfolio_std():
+
+
+    pass
+
+def get_sharpe_ratio():
+
+    # Sharpe ratio formula:
+    # Return of asset (or portfolio) - benchmark risk free rate of return
+    # -------------------------------------------------------------------
+    #              Standard deviation of asset (or portfolio) 
+    pass
+
+
+# ===================== Get Ticker Values =================== #
+
+
+
+
+
+# ===================== Visualizations =================== #
 
 def display_historical_market(amount=1000):
     
@@ -142,13 +176,12 @@ def display_historical_market(amount=1000):
     ax.fill_between(year_list, sandp_mean_list, sandp_70_list, facecolor="blue", alpha=0.1)
 
     plt.suptitle("Projected 30 Year Return")
-    ax.set(title="Using Historic Inflation Adjusted Return of S&P 500", xlabel="Years", ylabel="Dollars USD")
+    ax.set(title="Using Historic Inflation Adjusted Return of S&P 500", xlabel="Years", ylabel="Dollars USD", ylim=(0, 30000))
     plt.legend(loc="upper left")
 
     plt.show()
 
 #display_historical_market()
-
 
 def display_mean_index_market(amount=1000.0):
 
@@ -200,21 +233,21 @@ def display_mean_index_market(amount=1000.0):
                 index_120_list.append(temp5)
                 index_130_list.append(temp6)
 
-    ax = sns.lineplot(x=year_list, y=index_mean_list, label="Mean Index Fund Return")
-    ax.fill_between(year_list, index_mean_list, index_110_list, facecolor="blue", alpha=0.2, label="10% above/below normal return")
+    ax = sns.lineplot(x=year_list, y=index_mean_list, label="Mean Index Fund Return (≈9.42%)")
+    ax.fill_between(year_list, index_mean_list, index_110_list, facecolor="blue", alpha=0.2, label="10% above/below normal return (≈10.3%-8.5%)")
     ax.fill_between(year_list, index_mean_list, index_90_list, facecolor="blue", alpha=0.2)
-    ax.fill_between(year_list, index_mean_list, index_120_list, facecolor="blue", alpha=0.15, label="20% above/below normal return")
+    ax.fill_between(year_list, index_mean_list, index_120_list, facecolor="blue", alpha=0.15, label="20% above/below normal return (≈11.3%-7.5%)")
     ax.fill_between(year_list, index_mean_list, index_80_list, facecolor="blue", alpha=0.15)
-    ax.fill_between(year_list, index_mean_list, index_130_list, facecolor="blue", alpha=0.1, label="30% above/below normal return")
+    ax.fill_between(year_list, index_mean_list, index_130_list, facecolor="blue", alpha=0.1, label="30% above/below normal return (≈12.2%-6.6%)")
     ax.fill_between(year_list, index_mean_list, index_70_list, facecolor="blue", alpha=0.1)
     
     plt.suptitle("Projected 30 Year Return")
-    ax.set(title="Using Historic Returns of Schwab and Vanguard Total Market Funds", xlabel="Years", ylabel="Dollars USD")
+    ax.set(title="Using Historic Returns of Schwab (SWSTX) and Vanguard (VTI) Total Market Funds", xlabel="Years", ylabel="Dollars USD", ylim=(0, 35000))
     plt.legend(loc="upper left")
     
     plt.show()
 
-# display_mean_index_market()
+display_mean_index_market()
 
 def display_mean_real_estate(amount=1000):
     global sandp
@@ -275,13 +308,12 @@ def display_mean_real_estate(amount=1000):
     ax.fill_between(year_list, sandp_mean_list, sandp_70_list, facecolor="blue", alpha=0.1)
 
     plt.suptitle("Projected 30 Year Return")
-    ax.set(title="Using Historic Inflation Adjusted Real Estate Returns", xlabel="Years", ylabel="Dollars USD")
+    ax.set(title="Using Historic Inflation Adjusted Real Estate Returns", xlabel="Years", ylabel="Dollars USD", ylim=(0, 30000))
     plt.legend(loc="upper left")
 
     plt.show()
 
-display_mean_real_estate()
-
+#display_mean_real_estate()
 
 def display_ten_year_tbond(amount=1000):
     global sandp
@@ -303,12 +335,12 @@ def display_ten_year_tbond(amount=1000):
 
     ax = sns.lineplot(x=year_list, y=sandp_mean_list, label="Mean Return of 10 Year TBond")
     plt.suptitle("Projected 30 Year Return")
-    ax.set(title="Using Historic Return of 10 Year TBond", xlabel="Years", ylabel="Dollars USD")
+    ax.set(title="Using Historic Return of 10 Year TBond", xlabel="Years", ylabel="Dollars USD", ylim=(0, 30000))
     plt.legend(loc="upper left")
 
     plt.show()
 
-# display_ten_year_tbond()
+#display_ten_year_tbond()
 
 def display_portfolio_projection(percent_stocks, percent_bonds, percent_real_estate):
     
@@ -320,18 +352,21 @@ def display_portfolio_projection(percent_stocks, percent_bonds, percent_real_est
     estate_weight = percent_real_estate
 
     portfolio_return = (bond_return * bond_weight) + (market_return * market_weight) + (estate_return * estate_weight)
-
+    #####
 
 
 def display_indv_investment_history(symbol):
     
-    ticker_history = yf.Ticker(symbol)
-    ticker_history.history(period="max", interval="1mo")
+    ticker = yf.Ticker(symbol)
+    ticker_history = ticker.history(period="5y", interval="3mo")
+    return ticker_history
+
 
 def display_ticker_report(symbol):
     
     ticker_report = yf.Ticker(symbol)
     ticker_info = ticker_report.info
+
     bus_sum = ticker_info["longBusinessSummary"]
     sector = ticker_info["sector"]
     industry = ticker_info["industry"]
@@ -339,17 +374,39 @@ def display_ticker_report(symbol):
     five_year_div_yield = ticker_info["fiveYearAvgDividendYield"]
     five_year_return = ticker_info["fiveYearAverageReturn"]
     short_name = ticker_info["shortName"]
-    comapny_symbol = ticker_info["symbol"]
+    company_symbol = ticker_info["symbol"]
     trailing_pe = ticker_info["trailingPE"]
     short_ratio = ticker_info["shortRatio"]
     nav_price = ticker_info["navPrice"]
     market_price = ticker_info["regularMarketPrice"]
+    beta = ticker_info["beta"]
 
-    
-    print(f"Business Summary: {bus_sum}")
-    print(f"Sector: {sector}")
-    ######################
+    ticker_dict = {
+        "symbol": company_symbol,
+        "bus_sum": bus_sum,
+        "sector": sector,
+        "industry": industry,
+        "total_assets": total_assets,
+        "five_year_div_yield": five_year_div_yield,
+        "five_year_return": five_year_return,
+        "short_name": short_name,
+        "trailing_pe": trailing_pe,
+        "short_ratio": short_ratio,
+        "nav_price": nav_price,
+        "market_price": market_price,
+        "beta": beta
+    }
 
+    return ticker_dict
+
+def display_inflation_losses():
+    pass
+
+def portfolio_report_sugggestions():
+    pass
+
+def investment_preview():
+    pass
 
 
 if __name__=="__main__":
