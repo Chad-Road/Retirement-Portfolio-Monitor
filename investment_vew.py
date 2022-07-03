@@ -265,7 +265,7 @@ class InvestmentView:
 
 
 
-
+# Do you knowthe way to santa fe?
         
     
     
