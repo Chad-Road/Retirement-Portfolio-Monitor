@@ -8,6 +8,7 @@ import csv
 import matplotlib.pyplot as plt
 import json
 
+# TODO reformat original gui to updated functionality
 
 class InvestmentView:
     def __init__(self):
