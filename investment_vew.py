@@ -1,5 +1,4 @@
 from datetime import datetime
-from stock_class import Stock, DailyData
 from os import path
 from tkinter import *
 from tkinter import ttk
@@ -7,6 +6,8 @@ from tkinter import messagebox, simpledialog, filedialog
 import csv
 import matplotlib.pyplot as plt
 import json
+import investment_model
+import investment_controller
 
 # TODO reformat original gui to updated functionality
 
@@ -266,7 +267,7 @@ class InvestmentView:
 
 
 
-# Do you knowthe way to santa fe?
+# Do you know the way to santa fe?
         
     
     
